@@ -1,0 +1,124 @@
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+
+	/* Body Styles */
+body {
+    background-color: #F4F4F4;
+    font-family: Arial, sans-serif;
+}
+
+/* Input Styles */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Placeholder Styles */
+input[type="text"]::placeholder {
+    color: #999;
+}
+
+/* Submit Button Styles */
+input[type="submit"] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Submit Button Hover Effect */
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Center Column Styles */
+.center-column {
+    width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Item Row Styles */
+.item-row {
+    background-color: #f9f9f9;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Update and Delete Button Styles */
+.btn-update, .btn-delete {
+    padding: 8px 16px;
+    margin-right: 8px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+/* Update Button Styles */
+.btn-update {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+}
+
+/* Delete Button Styles */
+.btn-delete {
+    background-color: #f44336;
+    color: white;
+    border: none;
+}
+
+/* Strike Through Completed Tasks */
+.completed-task {
+    text-decoration: line-through;
+    color: #999;
+}
+
+
+</style>
+
+<div class="center-column">
+
+	<form method="POST" action="">
+		{% csrf_token %}
+		{{form.title}}
+		<input class="btn btn-info" type="submit" name="Create Task">
+	</form>
+
+	<div class="todo-list">
+
+        {% for task in tasks %}
+            <div class="item-row">
+                <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}">Update</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'delete_task' task.id %}">Delete</a>
+    
+                {% if task.complete == True %}
+                <strike>{{task}}</strike>
+                {% else %}
+                <span>{{task}}</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+        </div>
+
+
+    <form class="logout" action="{% url "users:logout" %}" method="post">
+        {% csrf_token %}
+        <button class="logout-button" aria-label="User Logout" title="User Logout">Log Out</button>
+    </form>
+    
+</div>
